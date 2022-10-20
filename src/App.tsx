@@ -232,6 +232,16 @@ function App() {
 				]}
 				transitionTime={1.5}
 			/>
+			<H3>Custom CSS ClassName</H3>
+			<MultiProgress
+				elements={[
+					{
+						value: 45,
+						color: Colors.BLUE3,
+					},
+				]}
+				className="box-shadow"
+			/>
 		</div>
 	);
 }
