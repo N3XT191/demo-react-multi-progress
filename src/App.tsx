@@ -1,14 +1,42 @@
-import MultiProgress from "react-multi-progress";
-import { Colors, H1, H3 } from "@blueprintjs/core";
+import MultiProgress, { ProgressComponentProps } from "react-multi-progress";
 import "./App.css";
-import { useState } from "react";
+import React, { useState } from "react";
+
+const Colors = {
+	BLUE3: "#2D72D2",
+	BLUE5: "#8ABBFF",
+	GREEN3: "#238551",
+	GREEN5: "#72CA9B",
+	ORANGE3: "#C87619",
+	ORANGE5: "#FBB360",
+	RED5: "#FA999C",
+};
+
+type ExtraData = { isBold: boolean };
+
+function CustomComponent({
+	children,
+	element,
+	...rest
+}: ProgressComponentProps<ExtraData>) {
+	return (
+		<div
+			{...rest} // adds all styles for rendering the progress bar
+			style={{
+				fontWeight: element.isBold ? 900 : 300,
+			}}
+		>
+			{children}
+		</div>
+	);
+}
 
 function App() {
 	const [val, setVal] = useState(15);
 	return (
 		<div className="container">
-			<H1>Demo: react-multi-progress </H1>
-			<H3>Basic example</H3>
+			<h1>Demo: react-multi-progress </h1>
+			<h3>Basic example</h3>
 			<MultiProgress
 				elements={[
 					{
@@ -17,7 +45,7 @@ function App() {
 					},
 				]}
 			/>
-			<H3>Multiple Elements</H3>
+			<h3>Multiple Elements</h3>
 			<MultiProgress
 				elements={[
 					{
@@ -34,7 +62,7 @@ function App() {
 					},
 				]}
 			/>
-			<H3>Vary backround-color</H3>
+			<h3>Vary backround-color</h3>
 			<MultiProgress
 				elements={[
 					{
@@ -71,7 +99,7 @@ function App() {
 				]}
 				backgroundColor={Colors.ORANGE5}
 			/>
-			<H3>Show Percentage Text</H3>
+			<h3>Show Percentage Text</h3>
 			<MultiProgress
 				height={15}
 				elements={[
@@ -96,7 +124,7 @@ function App() {
 					},
 				]}
 			/>
-			<H3>Border</H3>
+			<h3>Border</h3>
 			<MultiProgress
 				elements={[
 					{
@@ -115,7 +143,7 @@ function App() {
 				]}
 				border="3px dashed red"
 			/>
-			<H3>Height</H3>
+			<h3>Height</h3>
 			<MultiProgress
 				elements={[
 					{
@@ -152,7 +180,7 @@ function App() {
 				]}
 				height={65}
 			/>{" "}
-			<H3>Round</H3>
+			<h3>Round</h3>
 			<MultiProgress
 				elements={[
 					{
@@ -171,7 +199,7 @@ function App() {
 				]}
 				round={false}
 			/>{" "}
-			<H3>Round last element</H3>
+			<h3>Round last element</h3>
 			<MultiProgress
 				elements={[
 					{
@@ -190,7 +218,7 @@ function App() {
 				]}
 				roundLastElement={false}
 			/>
-			<H3>Transition Time</H3>
+			<h3>Transition Time</h3>
 			<button onClick={() => setVal((val + 20) % 100)}>Step</button>
 			transition time: 0
 			<MultiProgress
@@ -232,7 +260,7 @@ function App() {
 				]}
 				transitionTime={1.5}
 			/>
-			<H3>Custom CSS ClassName</H3>
+			<h3>Custom CSS ClassName</h3>
 			<MultiProgress
 				elements={[
 					{
@@ -241,6 +269,35 @@ function App() {
 					},
 				]}
 				className="box-shadow"
+			/>
+			<h3>Custom Component</h3>
+			<MultiProgress<ExtraData>
+				transitionTime={1.2}
+				elements={[
+					{
+						value: 15,
+						color: "blue",
+						isBold: false,
+					},
+					{
+						value: 35,
+						color: "rgb(100,0,0)",
+						showPercentage: true,
+						fontSize: 12,
+						textColor: "white",
+						isBold: true,
+					},
+					{
+						value: 25,
+						color: "black",
+						showPercentage: true,
+						textColor: "white",
+						fontSize: 12,
+						isBold: false,
+					},
+				]}
+				height={15}
+				component={CustomComponent}
 			/>
 		</div>
 	);
